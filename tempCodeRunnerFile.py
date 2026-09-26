@@ -1,58 +1,72 @@
 '''
-here i will use 
-conditional- LOGIC
-loops- MENU SYSTEM
-dictionary- TO STORE DATA
+uses
+1-Dictonary
+2-loops
+3-conditional
+4-Module: random
+5- File handeling
 
+websit : password
 
-in this project ..
-1- ADD STUDENT
-2- VIEW ALL STUDENT
-3-CHECK RESULT
+random module
+file read/write
+real world
 '''
 
 
-STUDENT={}
+
+import random
+import string
+
+password={}
+
+try:
+    with open("password.txt", "r") as file:
+        for line in file:
+            website, pwd= line.strip().split(":")
+            password[website]= pwd
+except:
+    pass
+
+def generate_password():
+    chars= string.ascii_letters + string.digits + "!@#$%^&*()<>?"
+    password ="".join(random.choice(chars) for _ in range(8))
+    return password
 while True:
-    print("\n---student manager app--- ")
-    print("1. add Student")
-    print("2. view students")
-    print("3. check result")
-    print("4. Exit")
+    print("---personal password manager----")
+    print("1. Save password")
+    print("2. view password")
+    print("3. generate password")
+    print("4, Exit")
 
-    choice = input("Enter your choice: ")
-    if choice =="1":
-        name = input("enter student name: ")
-        marks= int(input("enter marks: "))
-        STUDENT[name] = marks
-        print(f"{name} successfully Added! ")
-    elif choice == "2":
-        if not STUDENT:
-            print("No student found!")
+    choice= input("enter your choice ")
+    if choice=="1":
+        site = input("enter website: ")
+        pwd = input("enter password: ")
+
+        password[site] = pwd
+        with open("password.txt", "a") as file:
+            file.write(f"{site}:{pwd}\n")
+        print("saved")
+    elif choice=="2":
+        if not password:
+            print("no data")
         else:
-            for name, marks in STUDENT.items():
-                print(name,":", marks)
-    elif choice == "3":
-        name =input("enter the student name ")
-
-        if name in STUDENT:
-            marks = STUDENT[name]
-
-            if marks >= 45:
-                print("pass")
-            else:
-                print("fail")
-                
+            for site, pwd in password.items():
+                print(site,":", pwd)
+    elif choice =="3":
+        print(generate_password())
     elif choice =="4":
-        print("Exiting....")
+        print("ok bye...")
         break
+
+
     else:
         print("in-valid input")
 
 
 
 
-
-
+        
 
 
